@@ -13,6 +13,7 @@ bot = commands.Bot(command_prefix=".", intents=Intents)
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}') # type: ignore
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="cat videos"))
     
 @bot.slash_command(
     name="cat",
@@ -44,6 +45,7 @@ async def sync_error(ctx, error):
         await ctx.send("You do not have permission to use this command.")
     else:
         raise error
+    
     
 bot.load_extension('cogs.moderation')
 bot.run(os.getenv('TOKEN'))
