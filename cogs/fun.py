@@ -62,18 +62,45 @@ class Fun(commands.Cog):
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://kawaii.red/api/gif/hug?token=anonymous") as resp:
                     if resp.status != 200:
-                        await ctx.respond("something broke")
+                        await ctx.respond("An error occurred, please try again")
                         return
                     data = await resp.json()
                     image_url = data["response"]
         except aiohttp.ClientError:
-            await ctx.respond("couldnt connect i make amazing code please try again later")
+            await ctx.respond("Couldn't retrieve GIF. Please try again!")
             return
 
         embed = discord.Embed(description=f"{ctx.author.mention} hugged {person.mention}!", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)
     
+    @fun.command(
+        name="cuddle",
+        description="cuddles someone :D",
+        integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },
+    )
+    async def cuddle(self, ctx, person: discord.Member):
+        if person is None:
+            await ctx.respond("Please mention a person :3")
+            return
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://kawaii.red/api/gif/cuddle?token=anonymous") as resp:
+                    if resp.status != 200:
+                        await ctx.respond("An error occurred, please try again")
+                        return
+                    data = await resp.json()
+                    image_url = data["response"]
+        except aiohttp.ClientError:
+            await ctx.respond("Couldn't retrieve GIF. Please try again!")
+            return
+        
+        embed = discord.Embed(description=f"{ctx.author.mention} cuddles {person.mention}!", color=discord.Color.nitro_pink())
+        embed.set_image(url=image_url)
+        await ctx.respond(embed=embed)
     
 def setup(bot):
     bot.add_cog(Fun(bot))
