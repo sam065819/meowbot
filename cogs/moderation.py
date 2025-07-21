@@ -9,3 +9,6 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, member: discord.Member, reason: str):
         discord.Member.kick(member, reason)
         await ctx.respond("User ", member, "has been kicked for ", reason)
+        
+def setup(bot):
+    bot.add_cog(Moderation(bot))
