@@ -21,5 +21,13 @@ class Moderation(commands.Cog):
         await member.ban()
         await ctx.respond(f"{member} has been banned from the server.")
         
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.respond("You do not have permission to use this command.")
+        elif isinstance(error, commands.MemberNotFound):
+            await ctx.respond("Member not found.")
+        else:
+            raise error
+        
 def setup(bot):
     bot.add_cog(Moderation(bot))
