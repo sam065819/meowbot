@@ -37,7 +37,7 @@ class Fun(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://dog.ceo/api/breeds/image/random") as resp:
                 data = await resp.json()
-                image_url = data[0]["url"]
+                image_url = data["message"]
         embed = discord.Embed(title="puppy", description="woof", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)
