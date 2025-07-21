@@ -13,3 +13,7 @@ An incredibly simple Discord bot with a few moderation and fun commands, made fo
 * More picture/gif commands
 * More moderation commands
 (Once these 2 are finished is when the bot will initially be shipped.)
+
+## Post-ship planned features/changes
+* Make all error responses and the sync command return an embed
+* More commands and cogs
