@@ -1,14 +1,19 @@
 import discord
+import bot
+from bot import guild_id
 from discord.ext import commands
 
 class Moderation(commands.Cog):
     def __init__(self, bot) :
         self.bot = bot
         
-    @discord.slash_command()
-    async def kick(self, ctx, member: discord.Member, reason: str):
-        discord.Member.kick(member, reason)
-        await ctx.respond("User ", member, "has been kicked for ", reason)
+    moderation = discord.SlashCommandGroup("moderation", "Commands to moderate your server.")
+    
+    @moderation.command()
+    @commands.has_permissions(kick_members=True)
+    async def kick(self, ctx, member: discord.Member):
+        await member.kick()
+        await ctx.respond(f"{member} has been kicked from the server.")
         
 def setup(bot):
     bot.add_cog(Moderation(bot))
