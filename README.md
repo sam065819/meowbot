@@ -5,5 +5,4 @@ An incredibly simple Discord bot with a few moderation and fun commands, made fo
 ## Install Guide
 1. Install Python 3.13
 2. Copy .env.example to .env and replace "EXAMPLE" with your actual bot token
-3. Add your Guild ID to config.toml
-4. Run "py bot.py" or a similar command in your terminal
+3. Run "py bot.py" or a similar command in your terminal

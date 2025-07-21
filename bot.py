@@ -14,8 +14,6 @@ Intents = discord.Intents.default()
 Intents.message_content = True
 bot = commands.Bot(command_prefix=".", intents=Intents)
     
-guild_id = config["guild_id"]
-
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}') # type: ignore

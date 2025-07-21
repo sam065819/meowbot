@@ -1,6 +1,4 @@
 import discord
-import bot
-from bot import guild_id
 from discord.ext import commands
 
 class Moderation(commands.Cog):
