@@ -117,11 +117,12 @@ class Fun(commands.Cog):
                     if resp.status != 200:
                         await ctx.respond("An error occurred, please try again")
                         return
-                data = await resp.json()
-                image_url = data["url"]
+                    data = await resp.json()
+                    image_url = data["url"]
         except aiohttp.ClientError:
             await ctx.respond("Couldn't retrieve GIF. Please try again!")
             return
+        
         embed = discord.Embed(description=f"Aww, {ctx.author.mention} is crying :(", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)  
