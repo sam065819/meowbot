@@ -16,7 +16,7 @@ class Fun(commands.Cog):
             discord.IntegrationType.user_install,
         },
     )
-    async def cat(ctx):
+    async def cat(self, ctx):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://api.thecatapi.com/v1/images/search") as resp:
                 data = await resp.json()
@@ -24,7 +24,23 @@ class Fun(commands.Cog):
         embed = discord.Embed(title="kitty", description="meow", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)
-    
+        
+    @fun.command(
+        name='dog',
+        description='sends a cute puppy',
+        integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },
+    )
+    async def dog(self, ctx):
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://dog.ceo/api/breeds/image/random") as resp:
+                data = await resp.json()
+                image_url = data[0]["url"]
+        embed = discord.Embed(title="puppy", description="woof", color=discord.Color.nitro_pink())
+        embed.set_image(url=image_url)
+        await ctx.respond(embed=embed)
     
     
 def setup(bot):
