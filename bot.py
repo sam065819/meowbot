@@ -31,9 +31,17 @@ async def cat(ctx):
     await ctx.respond(embed=embed)
     
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def sync(ctx):
     await bot.sync_commands()
     await ctx.send("Synced commands.")
+    
+@sync.error
+async def sync_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You do not have permission to use this command.")
+    else:
+        raise error
     
 bot.load_extension('cogs.moderation')
 bot.run(os.getenv('TOKEN'))
