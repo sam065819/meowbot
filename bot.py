@@ -6,9 +6,6 @@ import aiohttp
 from dotenv import load_dotenv
 from discord.ext import commands
 
-with open('config.toml', 'rb') as fileObj:
-  config = tomllib.load(fileObj)
-
 load_dotenv()
 Intents = discord.Intents.default()
 Intents.message_content = True
