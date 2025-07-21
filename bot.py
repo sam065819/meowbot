@@ -16,3 +16,4 @@ async def cat(ctx):
     
 
 bot.run(os.getenv('TOKEN'))
+bot.load_extension('cogs.moderation')

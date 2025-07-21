@@ -8,3 +8,4 @@ class Moderation(commands.Cog):
     @discord.slash_command()
     async def kick(self, ctx, member: discord.Member, reason: str):
         discord.Member.kick(member, reason)
+        await ctx.respond("User ", member, "has been kicked for ", reason)
