@@ -27,24 +27,6 @@ async def ping(ctx):
     latency = round(bot.latency * 1000)
     embed = discord.Embed(title="Pong!", description=f"Latency: {latency}ms", color=discord.Color.green())
     await ctx.respond(embed=embed)
-
-# just copied over the cat command and changed stuff 
-@bot.slash_command(
-    name="dog",
-    description="sends a cute puppy",
-    integration_types={
-        discord.IntegrationType.guild_install,
-        discord.IntegrationType.user_install,
-    },
-)
-async def dog(ctx):
-    async with aiohttp.ClientSession() as session:
-        async with session.get("https://dog.ceo/api/breeds/image/random") as resp:
-            data = await resp.json()
-            image_url = data["message"]
-    embed = discord.Embed(title="puppy", description="woof", color=discord.Color.nitro_pink())
-    embed.set_image(url=image_url)
-    await ctx.respond(embed=embed)
     
 @bot.command()
 @commands.has_permissions(administrator=True)
