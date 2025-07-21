@@ -121,11 +121,31 @@ class Fun(commands.Cog):
                 image_url = data["link"]
         except aiohttp.ClientError:
             await ctx.respond("Couldn't retrieve GIF. Please try again!")
-            print(aiohttp.ClientError)
             return
         embed = discord.Embed(description=f"Aww, {ctx.author.mention} is crying :(", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)  
+        
+        
+    @fun.command(
+        name="8ball",
+        description="seek an answer from the 8 ball",
+        integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },
+    )
+    async def ball(self, ctx, question: str):
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://eightballapi.com/api") as resp:
+                    data = await resp.json()
+                    response = data["reading"]
+        except aiohttp.ClientError:
+            embed = discord.Embed(title=f"{question}", description="8 ball answers: Cannot decide, try again later", color=discord.Color.red())
+            await ctx.respond(embed=embed)
+        embed = discord.Embed(title=f"{question}", description=f"8 ball answers: {response}", color=discord.Color.green())
+        await ctx.respond(embed=embed)
                 
     
 def setup(bot):
