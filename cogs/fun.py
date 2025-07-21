@@ -6,7 +6,10 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
-    fun = discord.SlashCommandGroup("fun", "all the fun commands :3")
+    fun = discord.SlashCommandGroup("fun", "all the fun commands :3", integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },)
     
     @fun.command(
         name='cat',
@@ -16,6 +19,7 @@ class Fun(commands.Cog):
             discord.IntegrationType.user_install,
         },
     )
+    
     async def cat(self, ctx):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://api.thecatapi.com/v1/images/search") as resp:
