@@ -41,6 +41,34 @@ class Fun(commands.Cog):
         embed = discord.Embed(title="puppy", description="woof", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
         await ctx.respond(embed=embed)
+        
+    @fun.command(
+        name="hug",
+        description="hug someone if u cant irl",
+        integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },
+    )
+    async def hug(self, ctx, person: discord.Member):
+        if person is None:
+            await ctx.respond("Please mention a user to hug.")
+            return
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://kawaii.red/api/gif/hug?token=anonymous") as resp:
+                    if resp.status != 200:
+                        await ctx.respond("something broke")
+                        return
+                    data = await resp.json()
+                    image_url = data["response"]
+        except aiohttp.ClientError:
+            await ctx.respond("couldnt connect i make amazing code please try again later")
+            return
+
+        embed = discord.Embed(description=f"{ctx.author.mention} hugged {person.mention}!", color=discord.Color.nitro_pink())
+        embed.set_image(url=image_url)
+        await ctx.respond(embed=embed)
     
     
 def setup(bot):
