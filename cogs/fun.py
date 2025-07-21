@@ -113,12 +113,12 @@ class Fun(commands.Cog):
     async def cry(self, ctx):
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get("https://api.purrbot.site/v2/img/sfw/cry/gif") as resp:
+                async with session.get("https://api.otakugifs.xyz/gif?reaction=cry") as resp:
                     if resp.status != 200:
                         await ctx.respond("An error occurred, please try again")
                         return
                 data = await resp.json()
-                image_url = data["link"]
+                image_url = data["url"]
         except aiohttp.ClientError:
             await ctx.respond("Couldn't retrieve GIF. Please try again!")
             return
