@@ -14,18 +14,15 @@ bot = commands.Bot(command_prefix=".", intents=Intents)
 async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}') # type: ignore
     
-@bot.slash_command(name='cat', description='meows')
+@bot.slash_command(
+    name="cat",
+    description="sends a cute kitty",
+    integration_types={
+        discord.IntegrationType.guild_install,
+        discord.IntegrationType.user_install,
+    },
+)
 async def cat(ctx):
-    async with aiohttp.ClientSession() as session:
-        async with session.get("https://api.thecatapi.com/v1/images/search") as resp:
-            data = await resp.json()
-            image_url = data[0]["url"]
-    embed = discord.Embed(title="kitty", description="meow", color=discord.Color.nitro_pink())
-    embed.set_image(url=image_url)
-    await ctx.respond(embed=embed)
-    
-@bot.slash_command(name='kitty', description='sends cat')
-async def kitty(ctx):
     async with aiohttp.ClientSession() as session:
         async with session.get("https://api.thecatapi.com/v1/images/search") as resp:
             data = await resp.json()

@@ -7,13 +7,13 @@ class Moderation(commands.Cog):
         
     moderation = discord.SlashCommandGroup("moderation", "Commands to moderate your server.")
     
-    @moderation.command()
+    @moderation.command(name="kick", description="kicks a bad kitty from the server")
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member):
         await member.kick()
         await ctx.respond(f"{member} has been kicked from the server.")
         
-    @moderation.command()
+    @moderation.command(name="ban", description="bans a bad kitty from the server")
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, reason: str):
         await member.ban()
