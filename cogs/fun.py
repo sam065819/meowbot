@@ -146,6 +146,29 @@ class Fun(commands.Cog):
             embed = discord.Embed(title=f"{question}", description="8 ball answers: Cannot decide, try again later", color=discord.Color.red())
             await ctx.respond(embed=embed)
         embed = discord.Embed(title=f"{question}", description=f"8 ball answers: {response}", color=discord.Color.green())
+        await ctx.respond(embed=embed) 
+    @fun.command(
+        name="happy",
+        description="show someone you're happy",
+        integration_types={
+            discord.IntegrationType.guild_install,
+            discord.IntegrationType.user_install,
+        },
+    )
+    async def happy(self, ctx):
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://api.otakugifs.xyz/gif?reaction=happy") as resp:
+                    if resp.status != 200:
+                        await ctx.respond("An error occurred, please try again")
+                        return
+                data = await resp.json()
+                image_url = data["response"]
+        except aiohttp.ClientError:
+            await ctx.respond("Couldn't retrieve GIF. Please try again!")
+            return
+        embed = discord.Embed(description=f"Yay! {ctx.author.mention} is happy!", color=discord.Color.nitro_pink())
+        embed.set_image(url=image_url)
         await ctx.respond(embed=embed)
                 
     
