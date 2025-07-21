@@ -103,28 +103,29 @@ class Fun(commands.Cog):
         await ctx.respond(embed=embed)
         
     @fun.command(
-        name="happy",
-        description="show someone you're happy",
+        name="cry",
+        description="show someone you're sad",
         integration_types={
             discord.IntegrationType.guild_install,
             discord.IntegrationType.user_install,
         },
     )
-    async def happy(self, ctx):
+    async def cry(self, ctx):
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get("https://kawaii.red/api/gif/happy?token=anonymous") as resp:
+                async with session.get("https://api.purrbot.site/v2/img/sfw/cry/gif") as resp:
                     if resp.status != 200:
                         await ctx.respond("An error occurred, please try again")
                         return
                 data = await resp.json()
-                image_url = data["response"]
+                image_url = data["link"]
         except aiohttp.ClientError:
             await ctx.respond("Couldn't retrieve GIF. Please try again!")
+            print(aiohttp.ClientError)
             return
-        embed = discord.Embed(description=f"Yay! {ctx.author.mention} is happy!", color=discord.Color.nitro_pink())
+        embed = discord.Embed(description=f"Aww, {ctx.author.mention} is crying :(", color=discord.Color.nitro_pink())
         embed.set_image(url=image_url)
-        await ctx.respond(embed=embed)
+        await ctx.respond(embed=embed)  
                 
     
 def setup(bot):
