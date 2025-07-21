@@ -1,7 +1,6 @@
 import dotenv
 import discord
 import os
-import tomllib
 import aiohttp
 from dotenv import load_dotenv
 from discord.ext import commands
