@@ -61,4 +61,5 @@ async def sync_error(ctx, error):
     
     
 bot.load_extension('cogs.moderation')
+bot.load_extension('cogs.fun')
 bot.run(os.getenv('TOKEN'))
