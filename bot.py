@@ -2,6 +2,7 @@ import dotenv
 import discord
 import os
 import tomllib
+import aiohttp
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -21,7 +22,13 @@ async def on_ready():
     
 @bot.slash_command(name='cat', description='meows')
 async def cat(ctx):
-    await ctx.respond('meow')
+    async with aiohttp.ClientSession() as session:
+        async with session.get("https://api.thecatapi.com/v1/images/search") as resp:
+            data = await resp.json()
+            image_url = data[0]["url"]
+    embed = discord.Embed(title="kitty", description="meow", color=discord.Color.nitro_pink())
+    embed.set_image(url=image_url)
+    await ctx.respond(embed=embed)
     
 @bot.command()
 async def sync(ctx):
